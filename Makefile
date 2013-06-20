@@ -1,5 +1,5 @@
 
-SRC_DIR=src/
+SRC_DIR=./
 
 OBJDIR=$(SRC_DIR)_nv_obj/
 
