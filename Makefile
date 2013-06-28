@@ -1,7 +1,7 @@
 
 SRC_DIR=./
 
-OBJDIR=$(SRC_DIR)_nv_obj/
+OBJDIR=$(SRC_DIR)._nv_obj/
 
 EXECUTABLE_NAME=application
 PROJECT_NAME=OpenGL_Example
@@ -10,19 +10,23 @@ COMPILE_VERSION_MAJOR = 0
 COMPILE_VERSION_MINOR = 0
 COMPILE_VERSION_REVISION = "0"
 
-OPEN_GL_LIBRARIES = -lglut -lGLU 
+OPEN_GL_LIBRARIES = -lglut -lGLU
+OSX_OPEN_GL_LIBRARIES = -framework Glut -framework OpenGL 
 OPEN_AL_LIBRARIES = -lopenal
 OPEN_CV_LIBRARIES = 
 
-SDL2_LIBRARIES = -lSDL2
-SDL_LIBRARIES = -lSDL_image -lSDL_mixer -lSDL -lSDL_ttf
+SDL2_LIBRARIES = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+SDL_LIBRARIES = -lSDL2 -lSDL_image -lSDL_mixer -lSDL_ttf
 SFML_LIBRARIES = -lsfml-system -lsfml-window -lsfml-network -lsfml-graphics -lsfml-audio
-MEDIA_LIBRARIES = $(OPEN_AL_LIBRARIES) $(OPEN_GL_LIBRARIES) $(SFML_LIBRARIES)
 PRINTING_LIBRARIES = -lcups
 COMMUNICATION_LIBRARIES = -lserial
 VIDEO_LIBRARIES = -lavutil -lavformat -lavcodec -lavdevice -lavfilter -lswscale
 COMPRESSION_LIBRARIES = -lz -lbz2
 OTHER_LIBRARIES = -ldl -lm
+
+
+MEDIA_LIBRARIES = $(OPEN_AL_LIBRARIES) $(OSX_OPEN_GL_LIBRARIES) $(SFML_LIBRARIES)
+
 LIBRARIES = $(OTHER_LIBRARIES) $(COMPRESSION_LIBRARIES) $(MEDIA_LIBRARIES)
 
 
@@ -60,7 +64,7 @@ SDL_CONFIG_COMMAND = $(SDL_CONFIG_DIR)$(SDL_CONFIG)
 
 
 LINKER_EXTRAS =
-COMPILER_EXTRAS = -I/home/robd/libs/include/
+COMPILER_EXTRAS = 
 #LIBRARIES =  -lSDL_image -lSDL_mixer -lSDL -lSDL_ttf -lcups -lserial -ldl -lm
 
 
@@ -85,7 +89,7 @@ EXECUTABLE?= $(EXECUTABLE_NAME)_$(VERSION)
 DEFINES := $(VERSION_DEFINES) $(COMPILE_DATE_TIME_DEFINES)
 COMPILER_FLAGS = -c $(OPTIMIZE_FLAGS)
 
-all: start game done 
+all: start game 
 
 auto: all
 	./$(EXECUTABLE)
@@ -123,7 +127,7 @@ clean:
 	@echo '';echo '';echo 'Files left behind:';
 	ls -R $(OBJDIR) | grep "\.o"
 	
-checkos:
+checkos: 
 ifeq ($(UNAME),Darwin)
 	@echo "Compiling on OS X"
 	$(eval export OPENGL_FLAGS= -framework Carbon -framework OpenGL -framework GLUT)
@@ -133,11 +137,24 @@ ifeq ($(UNAME),Darwin)
 endif
 
 
+guard-%:
+	if [ "${${*}}" == "" ]; then \
+		echo "Environment variable $* not set"; \
+	    exit 1; \
+	fi
+
 done:
 	@echo '';echo '';echo '';
 	
-start:
-	clear;
+start: checkos
+ifndef TERM
+	@echo "Setting TERM environment variable."
+	$(eval export TERM=xterm)
+endif
+	@if clear; \
+	then echo ""; \
+	else echo "";\
+	fi
 	@echo '';echo '';echo '';
 	@echo 'Start.'; 
 
@@ -166,20 +183,6 @@ canidate:
 	make release
 	
 
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

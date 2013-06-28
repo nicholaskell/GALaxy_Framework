@@ -27,8 +27,6 @@ void drawBoard() {
     }
     glEnd();
 
-
-
     glTranslatef(-100, 100, 0);
 
     GLfloat spacing = WIDTH * 2;
@@ -56,7 +54,7 @@ void drawBoard() {
         yMoves += -spacing;
     }
 //    glTranslatef(-spacing / 2, spacing / 2, 0);
-    glTranslatef(-xMoves,-yMoves, 0);
+    glTranslatef(-xMoves, -yMoves, 0);
     glTranslatef(-spacing / 2, spacing / 2, 0);
     glTranslatef(100, -100, 0);
 
@@ -80,8 +78,8 @@ void drawBoardGame(float x, float y) {
 
 //    glRotatef(viewAngle,1,0,0);
 
-    glRotatef(viewAngle,1,0,0);
-    glTranslatef(0,0,-100);
+    glRotatef(viewAngle, 1, 0, 0);
+    glTranslatef(0, 0, -100);
     drawBoard();
 //    glLoadIdentity();
 //    glRotatef(viewAngle,1,0,0);
