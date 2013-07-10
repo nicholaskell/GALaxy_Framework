@@ -1,20 +1,23 @@
 /*
- * Shape.cpp
+ * Color.cpp
  *
- *  Created on: Jun 27, 2013
+ *  Created on: Jul 10, 2013
  *      Author: nicholaskell
  */
 
-#include "Shape.h"
+#include "Color.h"
 
 namespace gal {
 
-    Shape::Shape() {
+    Color::Color() {
         // TODO Auto-generated constructor stub
-
+        r = 0.5;
+        g = 0.5;
+        b = 0.5;
+        a = 1;
     }
 
-    Shape::~Shape() {
+    Color::~Color() {
         // TODO Auto-generated destructor stub
     }
 

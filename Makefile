@@ -15,9 +15,9 @@ OSX_OPEN_GL_LIBRARIES = -framework Glut -framework OpenGL
 OPEN_AL_LIBRARIES = -lopenal
 OPEN_CV_LIBRARIES = 
 
-SDL2_LIBRARIES = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
-SDL_LIBRARIES = -lSDL2 -lSDL_image -lSDL_mixer -lSDL_ttf
-SFML_LIBRARIES = -lsfml-system -lsfml-window -lsfml-network -lsfml-graphics -lsfml-audio
+#SDL2_LIBRARIES = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+#SDL_LIBRARIES = -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf
+#SFML_LIBRARIES = -lsfml-system -lsfml-window -lsfml-network -lsfml-graphics -lsfml-audio
 PRINTING_LIBRARIES = -lcups
 COMMUNICATION_LIBRARIES = -lserial
 VIDEO_LIBRARIES = -lavutil -lavformat -lavcodec -lavdevice -lavfilter -lswscale
@@ -89,17 +89,22 @@ EXECUTABLE?= $(EXECUTABLE_NAME)_$(VERSION)
 DEFINES := $(VERSION_DEFINES) $(COMPILE_DATE_TIME_DEFINES)
 COMPILER_FLAGS = -c $(OPTIMIZE_FLAGS)
 
-all: start game 
+all: start game
+ 
 
 auto: all
 	./$(EXECUTABLE)
 	
 game: version checkos $(OBJECTS)
+	$(CC) -Wno-deprecated  $(DEFINES) $(COMPILER_FLAGS) $(COMPILER_EXTRAS) -I ./$(SRC_DIR) main.cpp -o $@
 	@echo -n 'Start executable linking.....'
 	@if $(CC) $(OPENGL_FLAGS) $(CPP_LINK_FLAGS) $(EXECUTABLE) $(DEFINES) $(OBJECTS) $(LINKER_EXTRAS) $(LIBRARIES) ;\
 	then printf "SUCCESS!!\t\t\t";echo '';echo '-- Produced: '$(EXECUTABLE); rm  $(EXECUTABLE_NAME); ln -s $(EXECUTABLE) $(EXECUTABLE_NAME)  ;echo '';\
 	else echo ''; echo "FAIL"; echo ''; exit 1;\
 	fi
+
+staticLibrary: version checkos $(OBJECTS)
+	ar -cvq lib$(PROJECT_NAME).a $(OBJECTS)
 
 
 $(OBJDIR)%.o : %.cpp
