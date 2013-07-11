@@ -8,33 +8,26 @@
 #include "graphics/Window.h"
 #include "system/Clock.h"
 
+#include "sample/RotatingCube.h"
+
+
 gal::Window* mainWindow;
 
 
 
 //gal::Clock* clock;
 
-void idleLoop() {
 
-
-    static gal::Clock clock;
-//    std::cout << "Current time secs:"<<clock.getElapsedTime().asSeconds() << std::endl;
-    if (clock.getElapsedTime().asSeconds() > 30) {
-        mainWindow->close();
-        exit(0);
-    }
-//    mainWindow::defaultDisplayMethod();
-//    std::cout << "Current time secs:"<<clock.getElapsedTime().asSeconds() << std::endl;
-
-//    std::cout << "Current time secs:"<<clock.getElapsedTime().asSeconds() << std::endl;
-}
 
 int main(int argc, char **argv) {
 //    clock = new gal::Clock();
 //    clock->start();
 //    gal::Window window(argc, argv);
     mainWindow = new gal::Window(argc,argv);
-    mainWindow->setIdleFunction(idleLoop);
+    gal::RotatingCube* rotatingCube = gal::RotatingCube::getInstance();
+
+    mainWindow->setIdleFunction(gal::RotatingCube::idleMethod);
+    mainWindow->setDisplayFunction(gal::RotatingCube::drawMethod);
 
 //    mainWindow = &window;
     mainWindow->create();

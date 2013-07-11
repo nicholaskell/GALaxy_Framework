@@ -8,11 +8,13 @@
 #include "Clock.h"
 #include <iostream>
 #include "system/Config.h"
+
 #ifdef GAL_SYSTEM_MACOS
-#include <mach/mach_time.h>
+    #include <mach/mach_time.h>
 #else
-#include <time.h>
+    #include <time.h>
 #endif
+
 namespace gal {
 
     Clock::Clock() {
@@ -26,7 +28,7 @@ namespace gal {
         this->startTime = getCurrentOSTime();
     }
 
-    Time Clock::getElapsedTime(){
+    Time Clock::getElapsedTime() {
         return this->getCurrentOSTime() - this->startTime;
     }
 
