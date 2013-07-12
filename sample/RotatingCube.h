@@ -10,30 +10,28 @@
 
 #include <system/Clock.h>
 
+#include <graphics/GalaxyApplicationBase.h>
+
 namespace gal {
 
     /*
      *
      */
-    class RotatingCube {
+    class RotatingCube: public GalaxyApplicationBase<RotatingCube> {
         protected:
-            RotatingCube();
+
 
         public:
-            virtual ~RotatingCube();
-            static RotatingCube* getInstance();
+            RotatingCube();
+             ~RotatingCube();
 
-            static void idleMethod();
-            static void drawMethod();
+             void draw();
+             void idle();
 
-            virtual void draw();
-            virtual void idle();
-
-            virtual void drawCube();
-            virtual void update();
+             void drawCube();
+             void update();
 
         protected:
-            static RotatingCube* instance;
             float xAngle, yAngle, zAngle;
 
 

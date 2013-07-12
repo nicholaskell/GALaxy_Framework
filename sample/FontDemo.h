@@ -18,7 +18,7 @@ namespace gal {
             FontDemo();
 
         public:
-            FontDemo* getInstance();
+            static FontDemo* getInstance();
             virtual ~FontDemo();
 
             static void idleMethod();
@@ -28,7 +28,7 @@ namespace gal {
             virtual void idle();
 
         protected:
-            FontDemo* instance;
+            static FontDemo* instance;
 
     };
 

@@ -14,20 +14,22 @@
 
 namespace gal {
 
-    RotatingCube* RotatingCube::instance = NULL;
+//    RotatingCube* RotatingCube::instance = NULL;
 
     RotatingCube::RotatingCube() {
         xAngle = 0;
         yAngle = 0;
         zAngle = 0;
+        this->idleMethodPtr = &gal::RotatingCube::idle;
+        this->drawMethodPtr = &gal::RotatingCube::draw;
     }
 
-    RotatingCube* RotatingCube::getInstance() {
-        if (!RotatingCube::instance) {
-            RotatingCube::instance = new RotatingCube();
-        }
-        return RotatingCube::instance;
-    }
+//    RotatingCube* RotatingCube::getInstance() {
+//        if (!RotatingCube::instance) {
+//            RotatingCube::instance = new RotatingCube();
+//        }
+//        return RotatingCube::instance;
+//    }
 
     void RotatingCube::draw() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
@@ -140,17 +142,17 @@ namespace gal {
         zAngle += 0.7f;                        // Z Axis Rotation
     }
 
-    RotatingCube::~RotatingCube() {
-        delete RotatingCube::instance;
-        RotatingCube::instance = NULL;
-    }
+//    RotatingCube::~RotatingCube() {
+////        delete RotatingCube::instance;
+////        RotatingCube::instance = NULL;
+//    }
 
-    void RotatingCube::idleMethod() {
-        RotatingCube::getInstance()->idle();
-    }
-
-    void RotatingCube::drawMethod() {
-        RotatingCube::getInstance()->draw();
-    }
+//    void RotatingCube::idleMethod() {
+//        RotatingCube::getInstance()->idle();
+//    }
+//
+//    void RotatingCube::drawMethod() {
+//        RotatingCube::getInstance()->draw();
+//    }
 
 } /* namespace gal */

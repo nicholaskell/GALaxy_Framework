@@ -5,8 +5,8 @@
  *      Author: nicholaskell
  */
 
-#ifndef WINDOW_H_
-#define WINDOW_H_
+#ifndef MAINWINDOW_H_
+#define MAINWINDOW_H_
 
 #include <iostream>
 #include "system/Clock.h"
@@ -26,10 +26,10 @@ typedef void (*VisibilityFunction)(int state);
 
 namespace gal {
 
-    class Window {
+    class MainWindow {
         public:
-            Window(int argc, char **argv);
-            virtual ~Window();
+            static MainWindow* getInstance(int argc, char **argv);
+            virtual ~MainWindow();
             int getNumberOfWindows() const;
             bool isFullscreen() const;
             void setFullscreen(bool fullscreen);
@@ -68,6 +68,9 @@ namespace gal {
 
 
         protected:
+
+            MainWindow(int argc, char **argv);
+            static MainWindow* instance;
             static IdleFunction idleFunction;
             static DisplayFunction displayFunction;
             static ReshapeFunction reshapeFunction;
