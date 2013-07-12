@@ -9,6 +9,7 @@
 #include "system/Clock.h"
 
 #include "sample/RotatingCube.h"
+#include "sample/TextureDemo.h"
 
 
 gal::Window* mainWindow;
@@ -24,10 +25,21 @@ int main(int argc, char **argv) {
 //    clock->start();
 //    gal::Window window(argc, argv);
     mainWindow = new gal::Window(argc,argv);
-    gal::RotatingCube* rotatingCube = gal::RotatingCube::getInstance();
 
-    mainWindow->setIdleFunction(gal::RotatingCube::idleMethod);
-    mainWindow->setDisplayFunction(gal::RotatingCube::drawMethod);
+//    gal::TextureDemo* rotatingCube = gal::TextureDemo::getInstance();
+
+    int demoNumber = 1;
+    switch(demoNumber){
+        default:
+        case 0:
+            mainWindow->setIdleFunction(gal::RotatingCube::idleMethod);
+            mainWindow->setDisplayFunction(gal::RotatingCube::drawMethod);
+            break;
+        case 1:
+            mainWindow->setIdleFunction(gal::TextureDemo::idleMethod);
+            mainWindow->setDisplayFunction(gal::TextureDemo::drawMethod);
+            break;
+    }
 
 //    mainWindow = &window;
     mainWindow->create();

@@ -17,15 +17,13 @@ namespace gal {
 
     Texture::Texture() {
         this->textureId = 0;
-
     }
 
     Texture::~Texture() {
-        // TODO Auto-generated destructor stub
     }
 
     // load a 256x256 RGB .RAW file as a texture
-    bool Texture::loadRAW(const char * filename, int wrap) {
+    bool Texture::loadRAW(std::string filename, bool wrap) {
 //        GLuint texture;
         bool isLoaded = false;
         int width, height;
@@ -33,7 +31,7 @@ namespace gal {
         FILE* file;
 
         // open texture data
-        file = fopen(filename, "rb");
+        file = fopen(filename.c_str(), "rb");
         if (file == NULL){
             return isLoaded;
         }else{
@@ -81,6 +79,13 @@ namespace gal {
 //        this->textureId = texture;
 //        return texture;
         return isLoaded;
+    }
+
+    void Texture::loadPNG(std::string fileName) {
+    }
+
+    GLuint Texture::getId(){
+        return this->textureId;
     }
 
 } /* namespace gal */

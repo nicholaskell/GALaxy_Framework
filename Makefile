@@ -23,7 +23,8 @@ PRINTING_LIBRARIES = -lcups
 COMMUNICATION_LIBRARIES = -lserial
 VIDEO_LIBRARIES = -lavutil -lavformat -lavcodec -lavdevice -lavfilter -lswscale
 COMPRESSION_LIBRARIES = -lz -lbz2
-OTHER_LIBRARIES = -ldl -lm -l$(PROJECT_NAME) -L.
+PROJECT_LIBRARY= -l$(PROJECT_NAME) -L.
+OTHER_LIBRARIES = -ldl -lm 
 
 
 MEDIA_LIBRARIES = $(OPEN_AL_LIBRARIES) $(OSX_OPEN_GL_LIBRARIES) $(SFML_LIBRARIES)
@@ -96,10 +97,10 @@ all: start game
 auto: all
 	./$(EXECUTABLE)
 	
-game: version checkos staticLibrary
+game: version checkos $(OBJECTS)
 	$(CC) -Wno-deprecated  $(DEFINES) $(COMPILER_FLAGS) $(COMPILER_EXTRAS) -I ./$(SRC_DIR) main.cpp -o $@
 	@echo -n 'Start executable linking.....'
-	@if $(CC) $(OPENGL_FLAGS) $(CPP_LINK_FLAGS) $(EXECUTABLE) $(DEFINES) $(LINKER_EXTRAS) $(LIBRARIES) ;\
+	@if $(CC) $(OPENGL_FLAGS) $(CPP_LINK_FLAGS) $(EXECUTABLE) $(OBJECTS) $(DEFINES) $(LINKER_EXTRAS) $(LIBRARIES) ;\
 	then printf "SUCCESS!!\t\t\t";echo '';echo '-- Produced: '$(EXECUTABLE); rm  $(EXECUTABLE_NAME); ln -s $(EXECUTABLE) $(EXECUTABLE_NAME)  ;echo '';\
 	else echo ''; echo "FAIL"; echo ''; exit 1;\
 	fi
@@ -128,7 +129,7 @@ version:
 clean:
 	@echo '';echo '';echo '';
 	@echo  "Starting the clean."
-	-rm  $(OBJECTS) $(EXECUTABLE_NAME)
+	-rm  $(OBJECTS) $(EXECUTABLE_NAME) lib$(PROJECT_NAME).a
 	@echo "cleaned up."
 	@echo '';echo '';echo 'Files left behind:';
 	ls -R $(OBJDIR) | grep "\.o"

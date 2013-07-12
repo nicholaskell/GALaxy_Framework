@@ -45,6 +45,7 @@ namespace gal {
         // done with the polygon.
 
         this->drawCube();
+        this->update();
 
         // since this is double buffered, swap the buffers to display what just got drawn.
         glutSwapBuffers();

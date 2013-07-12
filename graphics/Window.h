@@ -22,20 +22,7 @@ typedef void (*PassiveMotionFunction)(int x, int y);
 typedef void (*EntryFunction)(int state);
 typedef void (*VisibilityFunction)(int state);
 
-//typedef unsigned int millis, void (*func)(int value), int value);
-//typedef void (*MenuStateFunc)(int state);
 
-//APIENTRY glutDisplayFunc(void (*func)(void));
-//extern void APIENTRY glutReshapeFunc(void (*func)(int width, int height));
-////extern void APIENTRY glutKeyboardFunc(void (*func)(unsigned char key, int x, int y));
-////extern void APIENTRY glutMouseFunc(void (*func)(int button, int state, int x, int y));
-////extern void APIENTRY glutMotionFunc(void (*func)(int x, int y));
-////extern void APIENTRY glutPassiveMotionFunc(void (*func)(int x, int y));
-////extern void APIENTRY glutEntryFunc(void (*func)(int state));
-////extern void APIENTRY glutVisibilityFunc(void (*func)(int state));
-////extern void APIENTRY glutIdleFunc(void (*func)(void));
-////extern void APIENTRY glutTimerFunc(unsigned int millis, void (*func)(int value), int value);
-//extern void APIENTRY glutMenuStateFunc(void (*func)(int state));
 
 namespace gal {
 

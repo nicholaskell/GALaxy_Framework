@@ -22,10 +22,18 @@ namespace gal {
         public:
             TexturedQuad();
             virtual ~TexturedQuad();
+            virtual void draw();
+            virtual void setPoints(Point points[NUMBER_OF_POINTS_IN_A_QUAD]);
+            virtual void setPoints(Point bl,Point br,Point tr,Point tl);
+            virtual bool loadRAW(std::string filename, bool wrap = true);
 
         protected:
             Texture texture;
             Point points[NUMBER_OF_POINTS_IN_A_QUAD];
+            Point* bl;
+            Point* br;
+            Point* tr;
+            Point* tl;
 
     };
 

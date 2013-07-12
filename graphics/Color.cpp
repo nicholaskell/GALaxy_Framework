@@ -11,9 +11,11 @@
 
 namespace gal {
 
-    Color Color::red(1,0,0);
-    Color Color::green(0,1,0);
-    Color Color::blue(0,0,1);
+    Color Color::black(0.0f,0.0f,0.0f);
+    Color Color::white(1.0f,1.0f,1.0f);
+    Color Color::red(1,0,0.0);
+    Color Color::green(0,1,0.0);
+    Color Color::blue(0,0,1.0);
 
     Color::Color() {
         // TODO Auto-generated constructor stub
@@ -39,6 +41,15 @@ namespace gal {
         this->g = g;
         this->b = b;
         this->a = 1.0f;
+    }
+
+
+
+    void Color::setHex(unsigned char r, unsigned char g, unsigned char b) {
+        this->r = float(r)/255;
+        this->g = float(g)/255;
+        this->b = float(b)/255;
+        this->a = 1;
     }
 
     void Color::setColor(Color color) {

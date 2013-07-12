@@ -9,6 +9,7 @@
 #define GAL_TEXTURE_H_
 
 #include <iostream>
+#include <GL/gl.h>
 
 namespace gal {
 
@@ -20,7 +21,8 @@ namespace gal {
             Texture();
             virtual ~Texture();
             virtual void loadPNG(std::string fileName);
-            bool loadRAW(const char * filename, int wrap);
+            bool loadRAW(std::string filename, bool wrap = 1);
+            GLuint getId();
 
         protected:
             GLuint textureId;

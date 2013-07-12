@@ -31,6 +31,7 @@ namespace gal {
 
     Window::Window(int argc, char **argv) {
         this->title = "Default GALaxy window";
+
 //        this->currentFPS = 0;
         this->width = 640;
         this->height = 480;
@@ -136,26 +137,9 @@ namespace gal {
         glutReshapeFunc(this->reshapeFunction);
         glutKeyboardFunc(this->keyboardFunction);
 
-//        pthread_attr_t attr;
-//        pthread_t posixThreadID;
-//        int returnVal;
-//
-//        returnVal = pthread_attr_init(&attr);
-//        assert(!returnVal);
-//        returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-//        assert(!returnVal);
-//
-//        int threadError = pthread_create(&posixThreadID, &attr,
-//                &runMainLoop, NULL);
-//
-//        returnVal = pthread_attr_destroy(&attr);
-//        assert(!returnVal);
-//        if (threadError != 0) {
-//            // Report an error.
-//        }
-//
-//        pthread_t mainLoopThread;
-//        glutMainLoop();
+
+        std::cout << "OpenGL version:"<< glGetString(GL_VERSION) << std::endl;
+
     }
 
     void Window::initOpenGL() {
