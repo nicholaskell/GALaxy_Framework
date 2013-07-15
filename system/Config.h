@@ -20,9 +20,6 @@
 #if defined(_WIN32) || defined(__WIN32__)
 
     #define GAL_SYSTEM_WINDOWS
-    #ifndef NOMINMAX
-        #define NOMINMAX
-    #endif
     #define GAL_SYSTEM GAL_SYSTEM_ID_WIN
 
 #elif defined(linux) || defined(__linux)
