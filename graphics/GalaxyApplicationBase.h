@@ -8,6 +8,8 @@
 #ifndef GALAXYAPPLICATIONBASE_H_
 #define GALAXYAPPLICATIONBASE_H_
 
+#include <cstddef>
+
 namespace gal {
 
     template<class Class>
@@ -17,11 +19,7 @@ namespace gal {
      */
     class GalaxyApplicationBase {
         public:
-            GalaxyApplicationBase() {
-                this->idleMethodPtr = NULL;
-                this->drawMethodPtr = NULL;
-            }
-            ;
+
             static Class* getInstance() {
                 //              std::cout << "Fetching an Instance of " << typeid(Class).name() << std::endl;
                 if (!m_pInstance) {
@@ -37,24 +35,48 @@ namespace gal {
             }
 
 //            void doIt(){};
-//            virtual void draw()=0;
+//            void draw(){};
 //            virtual void idle()=0;
 
             static void idleMethod() {
-                void (Class::*tmp)() = (Class::getInstance()->idleMethodPtr);
-                Class* tmpClass = Class::getInstance();
-                (tmpClass->*tmp)();
+//                void (Class::*tmp)() = (Class::getInstance()->idleMethodPtr);
+//                Class* tmpClass = Class::getInstance();
+//                (tmpClass->*tmp)();
+                (Class::getInstance()->*(Class::getInstance()->idleMethodPtr))();
             }
 
             static void drawMethod() {
-                void (Class::*tmp)() = (Class::getInstance()->drawMethodPtr);
-                Class* tmpClass = Class::getInstance();
-                (tmpClass->*tmp)();
+                //                void (Class::*tmp)() = (Class::getInstance()->drawMethodPtr);
+                //                Class* tmpClass = Class::getInstance();
+                //                (tmpClass->*tmp)();
+
+                (Class::getInstance()->*(Class::getInstance()->drawMethodPtr))();
+
+                //                (Class::getInstance()->(Class::getInstance()->drawMethodPtr))();
+            }
+
+            static void setupMethod() {
+                //                void (Class::*tmp)() = (Class::getInstance()->drawMethodPtr);
+                //                Class* tmpClass = Class::getInstance();
+                //                (tmpClass->*tmp)();
+
+                (Class::getInstance()->*(Class::getInstance()->setupMethodPtr))();
+
+                //                (Class::getInstance()->(Class::getInstance()->drawMethodPtr))();
             }
 
         protected:
 
-            ~GalaxyApplicationBase();
+            GalaxyApplicationBase() {
+                this->idleMethodPtr = &Class::idle;
+                this->drawMethodPtr = &Class::draw;
+                this->setupMethodPtr = &Class::setup;
+            }
+            ;
+            ~GalaxyApplicationBase() {
+            }
+            ;
+            void (Class::*setupMethodPtr)(void);
             void (Class::*drawMethodPtr)(void);
             void (Class::*idleMethodPtr)(void);
         private:

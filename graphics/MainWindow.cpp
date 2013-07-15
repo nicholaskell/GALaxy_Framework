@@ -21,6 +21,7 @@ namespace gal {
     Time MainWindow::maximumTimeBetweenDraw;
     Clock MainWindow::lastDraw;
     Clock MainWindow::fpsClock;
+    SetupOpenGLFunction MainWindow::setupOpenGLFunction;
     IdleFunction MainWindow::idleFunction;
     DisplayFunction MainWindow::displayFunction;
     ReshapeFunction MainWindow::reshapeFunction;
@@ -44,6 +45,7 @@ namespace gal {
         glutInitWindowSize(width, height);
         glutInitWindowPosition(0, 0);
 
+        this->setupOpenGLFunction = MainWindow::defaultSetupOpenGLMethod;
         this->idleFunction = MainWindow::defaultIdleMethod;
         this->displayFunction = MainWindow::defaultDisplayMethod;
         this->reshapeFunction = MainWindow::defaultReshapeMethod;
@@ -120,6 +122,26 @@ namespace gal {
         this->windowNumber = glutCreateWindow(this->title.c_str());
         ++MainWindow::numberOfWindows;
 
+        this->setupOpenGLFunction();
+
+        glutDisplayFunc(defaultDisplayMethod);
+        glutIdleFunc(defaultIdleMethod);
+        glutReshapeFunc(this->reshapeFunction);
+        glutKeyboardFunc(this->keyboardFunction);
+
+        std::cout << "OpenGL version:" << glGetString(GL_VERSION) << std::endl;
+
+    }
+
+    void MainWindow::initOpenGL() {
+
+    }
+
+    void MainWindow::reshape() {
+        gluPerspective(45.0f, (GLfloat) width / (GLfloat) height, 0.1f, 100.0f);
+    }
+
+    void MainWindow::defaultSetupOpenGLMethod() {
         glEnable(GL_TEXTURE_2D);            // Enable Texture Mapping
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClearDepth(1.0);              // Enables Clearing Of The Depth Buffer
@@ -130,26 +152,9 @@ namespace gal {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();               // Reset The Projection Matrix
 
-        gluPerspective(45.0f, (GLfloat) width / (GLfloat) height, 0.1f, 100.0f); // Calculate The Aspect Ratio Of The Window
+        gluPerspective(45.0f, (GLfloat) MainWindow::instance->getWidth() / (GLfloat) MainWindow::instance->getHeight(), 0.1f, 100.0f); // Calculate The Aspect Ratio Of The Window
 
         glMatrixMode(GL_MODELVIEW);
-
-        glutDisplayFunc(defaultDisplayMethod);
-        glutIdleFunc(defaultIdleMethod);
-        glutReshapeFunc(this->reshapeFunction);
-        glutKeyboardFunc(this->keyboardFunction);
-
-
-        std::cout << "OpenGL version:"<< glGetString(GL_VERSION) << std::endl;
-
-    }
-
-    void MainWindow::initOpenGL() {
-
-    }
-
-    void MainWindow::reshape() {
-        gluPerspective(45.0f, (GLfloat) width / (GLfloat) height, 0.1f, 100.0f);
     }
 
     void MainWindow::defaultIdleMethod() {
@@ -166,10 +171,9 @@ namespace gal {
     }
 
     void MainWindow::defaultDisplayMethod() {
-        if(MainWindow::defaultDisplayMethod != MainWindow::displayFunction){
+        if (MainWindow::defaultDisplayMethod != MainWindow::displayFunction) {
             MainWindow::displayFunction();
         }
-
 
         MainWindow::lastDraw.restart();
         ++MainWindow::frameCount;
@@ -286,7 +290,8 @@ namespace gal {
         return visibilityFunction;
     }
 
-    void MainWindow::setVisibilityFunction(VisibilityFunction visibilityFunction) {
+    void MainWindow::setVisibilityFunction(
+            VisibilityFunction visibilityFunction) {
         this->visibilityFunction = visibilityFunction;
     }
 
@@ -299,11 +304,15 @@ namespace gal {
     }
 
     MainWindow* MainWindow::getInstance(int argc, char** argv) {
-        if(!MainWindow::instance){
+        if (!MainWindow::instance) {
             MainWindow::instance = new MainWindow(argc, argv);
         }
 
         return MainWindow::instance;
+    }
+
+    void MainWindow::setSetupOpenGLFunction(SetupOpenGLFunction function) {
+        this->setupOpenGLFunction = function;
     }
 
     void MainWindow::defaultVisibilityMethod(int state) {

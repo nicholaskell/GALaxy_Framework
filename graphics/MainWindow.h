@@ -11,6 +11,8 @@
 #include <iostream>
 #include "system/Clock.h"
 
+typedef void (*SetupOpenGLFunction)(void);
+
 typedef void (*IdleFunction)(void);
 typedef void (*DisplayFunction)(void);
 typedef void (*ReshapeFunction)(int width, int height);
@@ -54,6 +56,9 @@ namespace gal {
             VisibilityFunction getVisibilityFunction() const;
             PassiveMotionFunction getPassiveMotionFunction() const;
 
+
+            void setSetupOpenGLFunction(SetupOpenGLFunction function);
+
             void setDisplayFunction(DisplayFunction displayFunction);
             void setEntryFunction(EntryFunction entryFunction);
             void setIdleFunction(IdleFunction idleFunction);
@@ -72,6 +77,7 @@ namespace gal {
             MainWindow(int argc, char **argv);
             static MainWindow* instance;
             static IdleFunction idleFunction;
+            static SetupOpenGLFunction setupOpenGLFunction;
             static DisplayFunction displayFunction;
             static ReshapeFunction reshapeFunction;
             static KeyboardFunction keyboardFunction;
@@ -97,6 +103,7 @@ namespace gal {
             void setHeight(int height);
             void setWidth(int width);
 
+            static void defaultSetupOpenGLMethod();
             static void defaultIdleMethod();
             static void defaultDisplayMethod();
             static void defaultReshapeMethod(int width,int height);

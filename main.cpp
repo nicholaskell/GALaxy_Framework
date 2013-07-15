@@ -10,6 +10,7 @@
 
 #include "sample/RotatingCube.h"
 #include "sample/TextureDemo.h"
+#include "sample/FontDemo.h"
 
 //gal::Clock* clock;
 
@@ -23,7 +24,8 @@ int main(int argc, char **argv) {
 
 //    gal::TextureDemo* rotatingCube = gal::TextureDemo::getInstance();
 
-    int demoNumber = 0;
+
+    int demoNumber = 2;
     switch (demoNumber) {
         default:
         case 0:
@@ -33,6 +35,11 @@ int main(int argc, char **argv) {
         case 1:
             mainWindow->setIdleFunction(gal::TextureDemo::idleMethod);
             mainWindow->setDisplayFunction(gal::TextureDemo::drawMethod);
+            break;
+        case 2:
+            mainWindow->setIdleFunction(gal::FontDemo::idleMethod);
+            mainWindow->setDisplayFunction(gal::FontDemo::drawMethod);
+            mainWindow->setSetupOpenGLFunction(gal::FontDemo::setupMethod);
             break;
     }
 

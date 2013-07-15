@@ -27,6 +27,7 @@ namespace gal {
 
              void draw();
              void idle();
+             void setup(){};
 
              void drawCube();
              void update();

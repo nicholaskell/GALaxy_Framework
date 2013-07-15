@@ -20,8 +20,8 @@ namespace gal {
         xAngle = 0;
         yAngle = 0;
         zAngle = 0;
-        this->idleMethodPtr = &gal::RotatingCube::idle;
-        this->drawMethodPtr = &gal::RotatingCube::draw;
+//        this->idleMethodPtr = &gal::RotatingCube::idle;
+//        this->drawMethodPtr = &gal::RotatingCube::draw;
     }
 
 //    RotatingCube* RotatingCube::getInstance() {

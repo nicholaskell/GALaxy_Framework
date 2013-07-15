@@ -8,27 +8,25 @@
 #ifndef FONTDEMO_H_
 #define FONTDEMO_H_
 
+#include <graphics/GalaxyApplicationBase.h>
+
 namespace gal {
 
     /*
      *
      */
-    class FontDemo {
+    class FontDemo: public GalaxyApplicationBase<FontDemo> {
         protected:
-            FontDemo();
 
         public:
-            static FontDemo* getInstance();
-            virtual ~FontDemo();
+            FontDemo();
+            ~FontDemo();
 
-            static void idleMethod();
-            static void drawMethod();
-
-            virtual void draw();
-            virtual void idle();
+            void draw();
+            void idle();
+            void setup();
 
         protected:
-            static FontDemo* instance;
 
     };
 
