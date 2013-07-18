@@ -41,9 +41,6 @@ namespace gal {
         this->fullscreen = false;
         this->windowNumber = -1;
         glutInit(&argc, argv);
-        glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
-        glutInitWindowSize(width, height);
-        glutInitWindowPosition(0, 0);
 
         this->setupOpenGLFunction = MainWindow::defaultSetupOpenGLMethod;
         this->idleFunction = MainWindow::defaultIdleMethod;
@@ -118,7 +115,12 @@ namespace gal {
         glutMainLoop();
     }
 
-    void MainWindow::create() {
+    void MainWindow::create(int width, int height, int x, int y) {
+
+        glutInitDisplayMode(
+                GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH | GLUT_STENCIL);
+        glutInitWindowSize(width, height);
+        glutInitWindowPosition(0, 0);
         this->windowNumber = glutCreateWindow(this->title.c_str());
         ++MainWindow::numberOfWindows;
 
@@ -128,6 +130,7 @@ namespace gal {
         glutIdleFunc(defaultIdleMethod);
         glutReshapeFunc(this->reshapeFunction);
         glutKeyboardFunc(this->keyboardFunction);
+        glutMouseFunc(this->mouseFunction);
 
         std::cout << "OpenGL version:" << glGetString(GL_VERSION) << std::endl;
 
@@ -152,7 +155,10 @@ namespace gal {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();               // Reset The Projection Matrix
 
-        gluPerspective(45.0f, (GLfloat) MainWindow::instance->getWidth() / (GLfloat) MainWindow::instance->getHeight(), 0.1f, 100.0f); // Calculate The Aspect Ratio Of The Window
+        gluPerspective(45.0f,
+                (GLfloat) MainWindow::instance->getWidth()
+                        / (GLfloat) MainWindow::instance->getHeight(), 0.1f,
+                100.0f); // Calculate The Aspect Ratio Of The Window
 
         glMatrixMode(GL_MODELVIEW);
     }
@@ -188,22 +194,49 @@ namespace gal {
     void MainWindow::defaultReshapeMethod(int width, int height) {
         std::cout << "Default reshape method " << " \twidth:" << width
                 << " \theight:" << height << std::endl;
+
+        const float aspectRatio = ((float) width) / height;
+        float xSpan = 1; // Feel free to change this to any xSpan you need.
+        float ySpan = 1; // Feel free to change this to any ySpan you need.
+
+        if (aspectRatio > 1) {
+            // Width > Height, so scale xSpan accordinly.
+            xSpan *= aspectRatio;
+        } else {
+            // Height >= Width, so scale ySpan accordingly.
+            ySpan = xSpan / aspectRatio;
+        }
+//            glOrhto2D(-1*xSpan, xSpan, -1*ySpan, ySpan, -1, 1);
+//            gluPerspective(60, (double)width/(double)height, 1, 256);
+//            gluPerspective(60, 1, 1, 256);
+        // Use the entire window for rendering.
+        glViewport(0, 0, width, height);
+
     }
 
     void MainWindow::defaultKeyboardMethod(unsigned char key, int x, int y) {
         std::cout << "default keyboard method - Key:" << key << " Ki:"
                 << int(key) << " \tX:" << x << " \tY:" << y << std::endl;
 
-        if (key == 27) {
-            glutDestroyWindow(MainWindow::numberOfWindows);
-            --MainWindow::numberOfWindows;
-            /* exit the program...normal termination. */
-            exit(0);
+        switch (key) {
+            case 27:
+                glutDestroyWindow(MainWindow::numberOfWindows);
+                --MainWindow::numberOfWindows;
+                /* exit the program...normal termination. */
+                exit(0);
+                break;
+            case 'f':
+                MainWindow::instance->setFullscreen(true);
+                break;
+            case 'w':
+                MainWindow::instance->setFullscreen(false);
+                break;
         }
+
     }
 
     void MainWindow::defaultMouseMethod(int button, int state, int x, int y) {
-        std::cout << "Default mouse method - Button:" << button << " \tX:" << x
+        std::cout << "Default mouse method - Button:" << button << "\tstate" << state << " \tX:" << x
                 << " \tY:" << y << std::endl;
     }
 
@@ -307,7 +340,13 @@ namespace gal {
         if (!MainWindow::instance) {
             MainWindow::instance = new MainWindow(argc, argv);
         }
+        return MainWindow::instance;
+    }
 
+    MainWindow* MainWindow::getInstance() {
+        if (!MainWindow::instance) {
+            throw 1;
+        }
         return MainWindow::instance;
     }
 

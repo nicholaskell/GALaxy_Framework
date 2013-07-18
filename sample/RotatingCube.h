@@ -8,16 +8,19 @@
 #ifndef ROTATINGCUBE_H_
 #define ROTATINGCUBE_H_
 
-#include <system/Clock.h>
+#include "GL/glut.h"
 
-#include <graphics/GalaxyApplicationBase.h>
+#include <system/time/Clock.h>
+
+//#include <graphics/GalaxyApplicationBase.h>
+#include <graphics/texture/Texture.h>
 
 namespace gal {
 
     /*
      *
      */
-    class RotatingCube: public GalaxyApplicationBase<RotatingCube> {
+    class RotatingCube {
         protected:
 
 
@@ -27,13 +30,20 @@ namespace gal {
 
              void draw();
              void idle();
-             void setup(){};
+             void setup();
 
              void drawCube();
+             void drawFloor();
              void update();
+
 
         protected:
             float xAngle, yAngle, zAngle;
+            GLUquadric*  quadratic;
+            Texture cubeTexture;
+            Texture floorTexture;
+
+
 
 
     };

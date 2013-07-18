@@ -80,7 +80,8 @@ namespace gal {
         float t3 = sin(n / 30 + 2);
 
         float ambient[4] =
-                { (t1 + 2.0) / 3, (t2 + 2.0) / 3, (t3 + 2.0) / 3, 0.3 };
+//        { (t1 + 2.0) / 3, (t2 + 2.0) / 3, (t3 + 2.0) / 3, 0.3 };
+        { ( 2.0) / 3, ( 2.0) / 3, ( 2.0) / 3, 0.3 };
         float diffuse[4] = { 1.0, 0.9, 0.9, 1.0 };
         float specular[4] = { 1.0, 0.7, 0.7, 1.0 };
         float position[4] = { 100.0, 100.0, 0.0, 1.0 };
@@ -94,6 +95,10 @@ namespace gal {
 
         glPushMatrix();
         {
+
+            glRotatef(n / 1.11, 0.0, 1.0, 0.0);
+            glRotatef(n / 2.23, 1.0, 0.0, 0.0);
+            glRotatef(n / 3.17, 0.0, 0.0, 1.0);
             glTranslatef(-0.9, -0.2, -10.0);
             glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
             glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
@@ -108,11 +113,15 @@ namespace gal {
             glMaterialfv(GL_FRONT, GL_AMBIENT, front_ambient);
             glColorMaterial(GL_FRONT, GL_DIFFUSE);
             glTranslatef(0.0, 0.0, 20.0);
-            glRotatef(n / 1.11, 0.0, 1.0, 0.0);
-            glRotatef(n / 2.23, 1.0, 0.0, 0.0);
-            glRotatef(n / 3.17, 0.0, 0.0, 1.0);
+//            glRotatef(n / 1.11, 0.0, 1.0, 0.0);
+//            glRotatef(n / 2.23, 1.0, 0.0, 0.0);
+//            glRotatef(n / 3.17, 0.0, 0.0, 1.0);
             glTranslatef(-260.0, -0.2, 0.0);
             glColor3f(1.0, 1.0, 1.0);
+            font[fontindex]->Render("Hoya!");
+
+            glTranslatef(0.0, -200.2, 0.0);
+            glRotatef(abs(30.0f - ((float)((int)n%60)))-30, 3.0, 0.0, 0.0);
             font[fontindex]->Render("Hoya!");
         }
         glPopMatrix();

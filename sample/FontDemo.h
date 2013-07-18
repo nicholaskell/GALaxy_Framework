@@ -8,14 +8,13 @@
 #ifndef FONTDEMO_H_
 #define FONTDEMO_H_
 
-#include <graphics/GalaxyApplicationBase.h>
 
 namespace gal {
 
     /*
      *
      */
-    class FontDemo: public GalaxyApplicationBase<FontDemo> {
+    class FontDemo {
         protected:
 
         public:

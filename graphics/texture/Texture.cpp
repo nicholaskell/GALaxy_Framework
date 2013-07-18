@@ -84,8 +84,12 @@ namespace gal {
     void Texture::loadPNG(std::string fileName) {
     }
 
-    GLuint Texture::getId(){
+    GLuint Texture::getTextureId(){
         return this->textureId;
+    }
+
+    void Texture::setTextureId(GLuint textureId) {
+        this->textureId = textureId;
     }
 
 } /* namespace gal */

@@ -22,7 +22,8 @@ namespace gal {
             virtual ~Texture();
             virtual void loadPNG(std::string fileName);
             bool loadRAW(std::string filename, bool wrap = 1);
-            GLuint getId();
+            GLuint getTextureId();
+            void setTextureId(GLuint textureId);
 
         protected:
             GLuint textureId;

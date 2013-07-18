@@ -9,7 +9,7 @@
 #define MAINWINDOW_H_
 
 #include <iostream>
-#include "system/Clock.h"
+#include "system/time/Clock.h"
 
 typedef void (*SetupOpenGLFunction)(void);
 
@@ -24,13 +24,14 @@ typedef void (*PassiveMotionFunction)(int x, int y);
 typedef void (*EntryFunction)(int state);
 typedef void (*VisibilityFunction)(int state);
 
-
-
 namespace gal {
+
+//    class GalaxyApplicationBase;
 
     class MainWindow {
         public:
             static MainWindow* getInstance(int argc, char **argv);
+            static MainWindow* getInstance();
             virtual ~MainWindow();
             int getNumberOfWindows() const;
             bool isFullscreen() const;
@@ -40,7 +41,8 @@ namespace gal {
             void setTitle(const std::string& title);
             int getWidth() const;
             void close();
-            void create();
+            void create(int width = 640, int height = 480, int x = 0,
+                    int y = 0);
             virtual void* runMainLoop(void*);
             virtual void initOpenGL();
             int getWindowNumber() const;
@@ -56,7 +58,6 @@ namespace gal {
             VisibilityFunction getVisibilityFunction() const;
             PassiveMotionFunction getPassiveMotionFunction() const;
 
-
             void setSetupOpenGLFunction(SetupOpenGLFunction function);
 
             void setDisplayFunction(DisplayFunction displayFunction);
@@ -70,7 +71,16 @@ namespace gal {
             void setReshapeFunction(ReshapeFunction reshapeFunction);
             void setVisibilityFunction(VisibilityFunction visibilityFunction);
 
-
+            static void defaultSetupOpenGLMethod();
+            static void defaultIdleMethod();
+            static void defaultDisplayMethod();
+            static void defaultReshapeMethod(int width, int height);
+            static void defaultKeyboardMethod(unsigned char key, int x, int y);
+            static void defaultMouseMethod(int button, int state, int x, int y);
+            static void defaultMotionMethod(int x, int y);
+            static void defaultPassiveMotionMethod(int x, int y);
+            static void defaultEntryMethod(int state);
+            static void defaultVisibilityMethod(int state);
 
         protected:
 
@@ -86,6 +96,8 @@ namespace gal {
             static PassiveMotionFunction passiveMotionFunction;
             static EntryFunction entryFunction;
             static VisibilityFunction visibilityFunction;
+
+//            static GalaxyApplicationBase* application;
 
             static int numberOfWindows;
             int width, height;
@@ -103,16 +115,6 @@ namespace gal {
             void setHeight(int height);
             void setWidth(int width);
 
-            static void defaultSetupOpenGLMethod();
-            static void defaultIdleMethod();
-            static void defaultDisplayMethod();
-            static void defaultReshapeMethod(int width,int height);
-            static void defaultKeyboardMethod(unsigned char key, int x, int y);
-            static void defaultMouseMethod(int button, int state, int x, int y);
-            static void defaultMotionMethod(int x, int y);
-            static void defaultPassiveMotionMethod(int x, int y);
-            static void defaultEntryMethod(int state);
-            static void defaultVisibilityMethod(int state);
     };
 
 } /* namespace gal */

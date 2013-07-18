@@ -39,8 +39,6 @@ namespace gal {
 
         this->texturedQuad.draw();
 
-
-
         glutSwapBuffers();
         xAngle += 0.9;
     }

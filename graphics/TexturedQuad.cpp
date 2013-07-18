@@ -45,25 +45,31 @@ namespace gal {
         glBegin(GL_QUADS);                      // begin drawing a cube
         {
 //            Color::setColor(Color::red);
-            glBindTexture(GL_TEXTURE_2D, texture.getId()); // choose the texture to use.
+            glBindTexture(GL_TEXTURE_2D, texture.getTextureId()); // choose the texture to use.
             glTexCoord2f(0.0f, 0.0f);
-            glVertex3f(bl->x,bl->y,bl->z); // Bottom Left Of The Texture and Quad
+            glVertex3f(bl->x, bl->y, bl->z); // Bottom Left Of The Texture and Quad
             glTexCoord2f(1.0f, 0.0f);
-            glVertex3f(br->x,br->y,br->z); // Bottom Right Of The Texture and Quad
+            glVertex3f(br->x, br->y, br->z); // Bottom Right Of The Texture and Quad
             glTexCoord2f(1.0f, 1.0f);
-            glVertex3f(tr->x,tr->y,tr->z);  // Top Right Of The Texture and Quad
+            glVertex3f(tr->x, tr->y, tr->z); // Top Right Of The Texture and Quad
             glTexCoord2f(0.0f, 1.0f);
-            glVertex3f(tl->x,tl->y,tl->z);  // Top Left Of The Texture and Quad
+            glVertex3f(tl->x, tl->y, tl->z); // Top Left Of The Texture and Quad
         }
         glEnd();
     }
 
     void TexturedQuad::setPoints(Point points[NUMBER_OF_POINTS_IN_A_QUAD]) {
-        //TODO override = operator in Point
+        this->points[0] = points[0];
+        this->points[1] = points[1];
+        this->points[2] = points[2];
+        this->points[3] = points[3];
     }
 
     void TexturedQuad::setPoints(Point bl, Point br, Point tr, Point tl) {
-        //TODO override = operator in Point
+        *this->bl = bl;
+        *this->br = br;
+        *this->tr = tr;
+        *this->tl = tl;
     }
 
     bool TexturedQuad::loadRAW(std::string filename, bool wrapping) {
