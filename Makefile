@@ -27,7 +27,7 @@ PROJECT_LIBRARY= -l$(PROJECT_NAME) -L.
 OTHER_LIBRARIES = -ldl -lm 
 
 
-MEDIA_LIBRARIES = $(OPEN_AL_LIBRARIES) $(OSX_OPEN_GL_LIBRARIES) -lftgl
+MEDIA_LIBRARIES = $(OPEN_AL_LIBRARIES) $(OPEN_GL_LIBRARIES) -lftgl
 
 LIBRARIES = $(OTHER_LIBRARIES) $(COMPRESSION_LIBRARIES) $(MEDIA_LIBRARIES)
 
@@ -66,7 +66,7 @@ SDL_CONFIG_COMMAND = $(SDL_CONFIG_DIR)$(SDL_CONFIG)
 
 
 LINKER_EXTRAS =
-COMPILER_EXTRAS = -I/usr/local/include/freetype2/
+COMPILER_EXTRAS = -I/usr/local/include/freetype2/ -I/usr/include/freetype2/
 #LIBRARIES =  -lSDL_image -lSDL_mixer -lSDL -lSDL_ttf -lcups -lserial -ldl -lm
 
 
