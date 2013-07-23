@@ -15,6 +15,16 @@
 
 namespace gal {
 
+    RotatingCube* RotatingCube::instance = NULL;
+
+    RotatingCube* RotatingCube::getInstance() {
+        if(!RotatingCube::instance){
+            RotatingCube::instance = new RotatingCube();
+        }
+
+        return RotatingCube::instance;
+    }
+
     RotatingCube::RotatingCube() {
         quadratic = gluNewQuadric();
         xAngle = 0;
@@ -252,6 +262,21 @@ namespace gal {
         this->cubeTexture.loadRAW("resources/texture.RAW", true);
         this->floorTexture.loadRAW("resources/texture.RAW", true);
 
+    }
+
+    RotatingCube::~RotatingCube() {
+    }
+
+    void RotatingCube::idleMethod() {
+        RotatingCube::getInstance()->idle();
+    }
+
+    void RotatingCube::drawMethod() {
+        RotatingCube::getInstance()->draw();
+    }
+
+    void RotatingCube::setupMethod() {
+        RotatingCube::getInstance()->setup();
     }
 
     void RotatingCube::update() {

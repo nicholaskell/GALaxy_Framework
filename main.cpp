@@ -22,13 +22,13 @@ int main(int argc, char **argv) {
 //    gal::TextureDemo* rotatingCube = gal::TextureDemo::getInstance();
 
 
-    int demoNumber = 1;
+    int demoNumber = 0;
     switch (demoNumber) {
         default:
         case 0:
-//            mainWindow->setIdleFunction(gal::RotatingCube::idleMethod);
-//            mainWindow->setDisplayFunction(gal::RotatingCube::drawMethod);
-//            mainWindow->setSetupOpenGLFunction(gal::RotatingCube::setupMethod);
+            mainWindow->setIdleFunction(gal::RotatingCube::idleMethod);
+            mainWindow->setDisplayFunction(gal::RotatingCube::drawMethod);
+            mainWindow->setSetupOpenGLFunction(gal::RotatingCube::setupMethod);
             break;
         case 1:
             mainWindow->setIdleFunction(gal::TextureDemo::idleMethod);

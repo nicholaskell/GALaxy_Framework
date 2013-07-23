@@ -48,7 +48,7 @@ namespace gal {
 
     TextureDemo::TextureDemo() {
         this->xAngle = 0.0;
-        this->texturedQuad.loadRAW("resources/texture.RAW", true);
+        this->texturedQuad.loadRAW("resources/texture.raw", true);
     }
 
     TextureDemo::~TextureDemo() {

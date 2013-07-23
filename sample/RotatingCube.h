@@ -25,12 +25,17 @@ namespace gal {
 
 
         public:
-            RotatingCube();
+            static RotatingCube* getInstance();
              ~RotatingCube();
 
              void draw();
              void idle();
              void setup();
+
+             static void idleMethod();
+             static void drawMethod();
+             static void setupMethod();
+
 
              void drawCube();
              void drawFloor();
@@ -38,6 +43,8 @@ namespace gal {
 
 
         protected:
+            RotatingCube();
+            static RotatingCube* instance;
             float xAngle, yAngle, zAngle;
             GLUquadric*  quadratic;
             Texture cubeTexture;
